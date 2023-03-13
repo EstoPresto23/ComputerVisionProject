@@ -11,3 +11,4 @@ more testing on this to follow.
 Program built up to neural network. 
 Is able to use webcam on windows systems and track the landmarks on a human face, pose, left and right hands
 Current code set for ASL's "hello," "thanks," and "I love you," visible under Folder setup comment. 
+LSTM chosen as model because requires less parameters than other neural networks 
