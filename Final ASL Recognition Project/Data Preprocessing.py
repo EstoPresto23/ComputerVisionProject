@@ -23,7 +23,7 @@ for dir_ in os.listdir(DATA_DIR): # loop over each directory in data directory
         y_ = [] # to store the y coordinates of all landmarks in current image
 
         img = cv2.imread(os.path.join(DATA_DIR, dir_, img_path)) # read the image
-        img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB) # convert the image to RGB format
+        img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 
         # detect hands landmarks in the image
         results = hands.process(img_rgb)

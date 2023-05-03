@@ -7,7 +7,6 @@ import numpy as np
 model_dict = pickle.load(open('./model.p', 'rb'))
 model = model_dict['model']
 
-# Open the camera
 cap = cv2.VideoCapture(0)
 
 # Initialize the MediaPipe Hands module and other necessary variables
@@ -59,16 +58,24 @@ while True:
                 y = hand_landmarks.landmark[i].y
                 data_aux.append(x - min(x_))
                 data_aux.append(y - min(y_))
-
-            # Draw a bounding box around the hand landmarks and predict the corresponding letter of the ASL alphabet
-            x1 = int(min(x_) * W) - 10
-            y1 = int(min(y_) * H) - 10
-            x2 = int(max(x_) * W) - 10
-            y2 = int(max(y_) * H) - 10
-            prediction = model.predict([np.asarray(data_aux)])
-            predicted_character = labels_dict[int(prediction[0])]
-            cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 0, 0), 4)
-            cv2.putText(frame, predicted_character, (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 1.3, (0, 0, 0), 3, cv2.LINE_AA)
+            if len(data_aux) != 42:
+                cv2.putText(frame, "Please pose a hand in the frame.", (10, 50), cv2.FONT_HERSHEY_SIMPLEX, 1,
+                            (0, 0, 255), 2, cv2.LINE_AA)
+            else:
+                # Draw a bounding box around the hand landmarks and predict the corresponding letter of the ASL alphabet
+                x1 = int(min(x_) * W) - 10
+                y1 = int(min(y_) * H) - 10
+                x2 = int(max(x_) * W) - 10
+                y2 = int(max(y_) * H) - 10
+                prediction = model.predict([np.asarray(data_aux)])
+                confidence_score = (model.decision_function([np.asarray(data_aux)]) + 1) / 2
+                confidence_score = confidence_score[0]
+                predicted_character = labels_dict[int(prediction[0])]
+                cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 0, 0), 4)
+                cv2.putText(frame, predicted_character, (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 1.3, (0, 0, 0), 3,
+                            cv2.LINE_AA)
+                cv2.putText(frame, f"Confidence score: {confidence_score[0]:.2f}", (10, 50), cv2.FONT_HERSHEY_SIMPLEX, 1,
+                            (0, 255, 0), 2, cv2.LINE_AA)
 
     cv2.imshow('ASL Alphabet', frame)
     cv2.waitKey(1)

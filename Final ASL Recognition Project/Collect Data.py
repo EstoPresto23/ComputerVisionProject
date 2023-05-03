@@ -21,7 +21,7 @@ for i in range(NUM_HAND_GESTURES):
     # Wait for user to press 'q' to start collecting images
     while True:
         ret, frame = cap.read()
-        cv2.putText(frame, 'Press Q to start', (100,50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2, cv2.LINE_AA)
+        cv2.putText(frame, 'Press Q to start', (100,50), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2, cv2.LINE_AA)
         cv2.imshow('Collect Data', frame)
         if cv2.waitKey(1) == ord('q'):
             break

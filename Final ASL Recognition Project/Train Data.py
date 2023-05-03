@@ -1,8 +1,7 @@
 import pickle
-
 from sklearn.svm import SVC
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import accuracy_score
+from sklearn.metrics import accuracy_score, confusion_matrix
 import numpy as np
 
 # Load data dictionary from data.pickle file
@@ -22,11 +21,15 @@ model.fit(x_train, y_learn)
 # Predict on the testing set
 y_predict = model.predict(x_test)
 
-# Compute the accuracy of the model
+# Compute the accuracy and confusion matrix of the model
 score = accuracy_score(y_predict, y_test)
+cm = confusion_matrix(y_test, y_predict)
+print("Confusion matrix:")
+print(cm)
 
 # Print the accuracy
 print('{}% of samples were classified'.format(score * 100))
+
 
 # Save the trained model as a pickle file
 f = open('model.p', 'wb')
