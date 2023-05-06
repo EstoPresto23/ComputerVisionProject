@@ -3,7 +3,7 @@ import cv2
 
 # Define data directory, number of hand gestures, and dataset size
 DATA_DIR = './data'
-NUM_HAND_GESTURES = 11
+NUM_HAND_GESTURES = 36
 DATASET_SIZE = 100
 
 # Create data directory if it does not exist
